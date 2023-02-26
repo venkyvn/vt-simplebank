@@ -13,7 +13,7 @@ type createAccountRequest struct {
 	Currency string `json:"currency" binding:"required,currency"`
 }
 
-func (s *Server) createAccount(context *gin.Context) {
+func (server *Server) createAccount(context *gin.Context) {
 	var req createAccountRequest
 	if err := context.ShouldBind(&req); err != nil {
 		context.JSON(http.StatusBadRequest, errorResponse(err))
@@ -26,7 +26,7 @@ func (s *Server) createAccount(context *gin.Context) {
 		Currency: req.Currency,
 	}
 
-	account, err := s.store.CreateAccount(context, arg)
+	account, err := server.store.CreateAccount(context, arg)
 	if err != nil {
 		if pqErr, ok := err.(*pq.Error); ok {
 			switch pqErr.Code.Name() {
@@ -46,13 +46,13 @@ type getAccountRequest struct {
 	ID int64 `uri:"id" binding:"required,min=1"`
 }
 
-func (s *Server) getAccount(context *gin.Context) {
+func (server *Server) getAccount(context *gin.Context) {
 	var req getAccountRequest
 	if err := context.ShouldBindUri(&req); err != nil {
 		context.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
-	account, err := s.store.GetAccount(context, req.ID)
+	account, err := server.store.GetAccount(context, req.ID)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			context.JSON(http.StatusNotFound, errorResponse(err))
@@ -70,7 +70,7 @@ type listAccountRequest struct {
 	PageSize int32 `form:"page_size" binding:"required,min=5,max=10"`
 }
 
-func (s *Server) listAccount(context *gin.Context) {
+func (server *Server) listAccount(context *gin.Context) {
 	var req listAccountRequest
 	if err := context.ShouldBindQuery(&req); err != nil {
 		context.JSON(http.StatusBadRequest, errorResponse(err))
@@ -82,7 +82,7 @@ func (s *Server) listAccount(context *gin.Context) {
 		Offset: (req.PageId - 1) * req.PageSize,
 	}
 
-	accounts, err := s.store.ListAccounts(context, arg)
+	accounts, err := server.store.ListAccounts(context, arg)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			context.JSON(http.StatusNotFound, errorResponse(err))
