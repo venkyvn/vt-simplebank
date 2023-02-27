@@ -37,14 +37,17 @@ jobs:
           - 5432:5432
 
     steps:
-    - uses: actions/checkout@v3
 
     - name: Set up Go
       uses: actions/setup-go@v3
       with:
         go-version: 1.19
 
-    - name: Setup golang migrate
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v3
+
+
+    - name: Install golang migrate
       run: |
         curl -L https://github.com/golang-migrate/migrate/releases/download/v4.15.2/migrate.linux-amd64.tar.gz | tar xvz
         sudo mv migrate /usr/bin/migrate
@@ -52,9 +55,6 @@ jobs:
 
     - name: Setup database
       run: make migrateup
-
-    - name: Setup generate mock
-      run: make mock
 
     - name: Test
       run: make test

@@ -2,10 +2,12 @@ package api
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	db "vuongtran/learning/simplebank/db/sqlc"
+	"vuongtran/learning/simplebank/token"
 )
 
 type transferRequest struct {
@@ -16,16 +18,26 @@ type transferRequest struct {
 }
 
 func (server *Server) createTransfer(context *gin.Context) {
+
 	var req transferRequest
 	if err := context.ShouldBind(&req); err != nil {
 		context.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
+	fromAccount, valid := server.validAccount(context, req.FromAccountID, req.Currency)
 
-	if !server.validAccount(context, req.FromAccountID, req.Currency) {
+	if !valid {
 		return
 	}
-	if !server.validAccount(context, req.ToAccountID, req.Currency) {
+	authPayload := context.MustGet(authorizationPayloadKey).(*token.Payload)
+	if fromAccount.Owner != authPayload.Username {
+		err := errors.New("from account doesn't belong to the authenticated user")
+		context.JSON(http.StatusUnauthorized, errorResponse(err))
+		return
+	}
+
+	_, valid = server.validAccount(context, req.ToAccountID, req.Currency)
+	if !valid {
 		return
 	}
 
@@ -44,21 +56,21 @@ func (server *Server) createTransfer(context *gin.Context) {
 	context.JSON(http.StatusOK, result)
 }
 
-func (server *Server) validAccount(ctx *gin.Context, accountID int64, currency string) bool {
+func (server *Server) validAccount(ctx *gin.Context, accountID int64, currency string) (db.Account, bool) {
 	acc, err := server.store.GetAccount(ctx, accountID)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			ctx.JSON(http.StatusNotFound, errorResponse(err))
-			return false
+			return acc, false
 		}
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
-		return false
+		return acc, false
 	}
 
 	if acc.Currency != currency {
 		err := fmt.Errorf("account [%d] currency mismatch: %server vs %server", acc.ID, acc.Currency, currency)
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
-		return false
+		return acc, false
 	}
-	return true
+	return acc, true
 }
