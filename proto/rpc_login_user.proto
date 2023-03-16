@@ -4,7 +4,7 @@ import "google/protobuf/timestamp.proto";
 
 package pb;
 
-option go_package = "vuongtran/learning/simplebank";
+option go_package = "vuongtran/learning/simplebank/pb";
 
 message LoginUserRequest{
   string username = 1;
