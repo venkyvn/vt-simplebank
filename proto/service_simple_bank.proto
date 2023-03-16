@@ -1,6 +1,6 @@
 syntax = "proto3";
-import "user.proto";
 import "rpc_create_user.proto";
+import "rpc_login_user.proto";
 
 package pb;
 
@@ -8,9 +8,7 @@ option go_package = "vuongtran/learning/simplebank";
 
 
 service SimpleBank{
-  rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {
+  rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {}
 
-  }
-
-  rpc
+  rpc LoginUser (LoginUserRequest) returns (LoginUserResponse) {}
 }
