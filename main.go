@@ -3,9 +3,14 @@ package main
 import (
 	"database/sql"
 	_ "github.com/lib/pq"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 	"log"
+	"net"
 	"vuongtran/learning/simplebank/api"
 	db "vuongtran/learning/simplebank/db/sqlc"
+	"vuongtran/learning/simplebank/gapi"
+	simplebank "vuongtran/learning/simplebank/pb"
 	"vuongtran/learning/simplebank/util"
 )
 
@@ -28,12 +33,39 @@ func main() {
 	}
 
 	store := db.NewStore(conn)
+
+	runGrpcServer(config, store)
+}
+
+func runGrpcServer(config util.Config, store db.Store) {
+	server, err := gapi.NewServer(store, config)
+	if err != nil {
+		log.Fatal("cannot create server", err)
+	}
+	grpcServer := grpc.NewServer()
+	simplebank.RegisterSimpleBankServer(grpcServer, server)
+	reflection.Register(grpcServer) // important -> self document to help internal server can find each other
+
+	listener, err := net.Listen("tcp", config.GRPCServerAddress)
+	if err != nil {
+		log.Fatal("cannot create listener", err)
+	}
+
+	log.Printf("start gRPC server at %s", listener.Addr().String())
+
+	err = grpcServer.Serve(listener)
+	if err != nil {
+		log.Fatal("cannot create gRPC server", err)
+	}
+}
+
+func runGinServer(config util.Config, store db.Store) {
 	server, err := api.NewServer(store, config)
 	if err != nil {
 		log.Fatal("cannot create server", err)
 	}
 
-	err = server.Start(config.ServerAddress)
+	err = server.Start(config.HTTPServerAddress)
 	if err != nil {
 		log.Fatal("cannot start server", err)
 	}
