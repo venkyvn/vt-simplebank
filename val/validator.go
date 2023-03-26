@@ -22,7 +22,7 @@ func ValidateUsername(username string) error {
 	if err := ValidateString(username, 3, 100); err != nil {
 		return err
 	}
-	if isValidUsername(username) {
+	if !isValidUsername(username) {
 		return fmt.Errorf("must contain only lowercase letters, digits, underscore")
 	}
 	return nil
@@ -32,7 +32,7 @@ func ValidateFullName(username string) error {
 	if err := ValidateString(username, 3, 100); err != nil {
 		return err
 	}
-	if isValidFullName(username) {
+	if !isValidFullName(username) {
 		return fmt.Errorf("must contain only letters or spaces")
 	}
 	return nil
