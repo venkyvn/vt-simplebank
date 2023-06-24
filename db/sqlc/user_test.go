@@ -2,6 +2,8 @@ package db
 
 import (
 	"context"
+	"database/sql"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
 	"time"
@@ -50,5 +52,24 @@ func TestGetUser(t *testing.T) {
 	require.Equal(t, user1.CreatedAt, user2.CreatedAt)
 	require.WithinDuration(t, user1.PasswordChangedAt, user2.PasswordChangedAt, time.Second)
 	require.WithinDuration(t, user1.CreatedAt, user2.CreatedAt, time.Second)
+}
+
+func TestUpdateUserOnlyFullName(t *testing.T) {
+	oldUser := createRandomUser(t)
+	newFullName := util.RandomOwner()
+	updatedUser, err := testQueries.UpdateUser(context.Background(),
+		UpdateUserParams{
+			Username: oldUser.Username,
+			FullName: sql.NullString{
+				String: newFullName,
+				Valid:  true,
+			}},
+	)
+
+	assert.NoError(t, err)
+	assert.NotEqual(t, oldUser.FullName, updatedUser.FullName)
+	assert.Equal(t, newFullName, updatedUser.FullName)
+	assert.Equal(t, oldUser.Email, updatedUser.Email)
+	assert.Equal(t, oldUser.HashedPassword, updatedUser.HashedPassword)
 
 }

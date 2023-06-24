@@ -1,5 +1,5 @@
 postgres:
-	docker run --platform linux/amd64 --name postgres12 --network bank-network -p 5432:5432 -v /Users/vgtn/Documents/workspace/db/postgres:/var/lib/postgresql/data -e POSTGRES_USER=root -e POSTGRES_PASSWORD=123 -d postgres:12-alpine
+	docker run --platform linux/amd64 --name postgres12 --network bank-network -p 5432:5432 -v /Users/vuong/Documents/db/postgres:/var/lib/postgresql/data -e POSTGRES_USER=root -e POSTGRES_PASSWORD=123 -d postgres:12-alpine
 
 createdb:
 	docker exec -it postgres12 createdb --username=root --owner=root simple_bank
@@ -31,4 +31,17 @@ server:
 mock:
 	mockgen -package mockdb -destination db/mock/store.go vuongtran/learning/simplebank/db/sqlc Store
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc server mock migrateup1 migratedown1
+proto:
+	rm -f pb/*.go
+	rm -f doc/swagger/*.swagger.json
+	protoc --proto_path=proto --go_out=pb --go_opt=paths=source_relative \
+	--go-grpc_out=pb --go-grpc_opt=paths=source_relative \
+	--grpc-gateway_out=pb --grpc-gateway_opt paths=source_relative \
+	--openapiv2_out=doc/swagger --openapiv2_opt=allow_merge=true,merge_file_name=simple_bank \
+	proto/*.proto
+	statik -src=./doc/swagger -dest=./doc
+
+evans:
+	evans -r --host localhost --port 9090 repl
+
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc server mock migrateup1 migratedown1 proto evans
