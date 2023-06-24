@@ -1,5 +1,5 @@
 postgres:
-	docker run --platform linux/amd64 --name postgres12 --network bank-network -p 5432:5432 -v /Users/vgtn/Documents/workspace/db/postgres:/var/lib/postgresql/data -e POSTGRES_USER=root -e POSTGRES_PASSWORD=123 -d postgres:12-alpine
+	docker run --platform linux/amd64 --name postgres12 --network bank-network -p 5432:5432 -v /Users/vuong/Documents/db/postgres:/var/lib/postgresql/data -e POSTGRES_USER=root -e POSTGRES_PASSWORD=123 -d postgres:12-alpine
 
 createdb:
 	docker exec -it postgres12 createdb --username=root --owner=root simple_bank
