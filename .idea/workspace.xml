@@ -4,39 +4,23 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e6cec07-c630-459f-910c-a786f926b2f4" name="Changes" comment="downgrade go version">
-      <change afterPath="$PROJECT_DIR$/gapi/rpc_update_user.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pb/rpc_update_user.pb.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proto/protoc-gen-openapiv2/options/annotations.proto" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proto/protoc-gen-openapiv2/options/openapiv2.proto" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proto/rpc_update_user.proto" afterDir="false" />
+    <list default="true" id="5e6cec07-c630-459f-910c-a786f926b2f4" name="Changes" comment="build grpc with optional param">
+      <change afterPath="$PROJECT_DIR$/gapi/authorization.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/mock/store.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/mock/store.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/query/user.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db/query/user.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/sqlc/account.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/sqlc/account.sql.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/sqlc/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/sqlc/db.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/sqlc/entry.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/sqlc/entry.sql.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/sqlc/models.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/sqlc/models.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/sqlc/querier.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/sqlc/querier.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/sqlc/session.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/sqlc/session.sql.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/sqlc/transfer.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/sqlc/transfer.sql.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/sqlc/user.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/sqlc/user.sql.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doc/statik/statik.go" beforeDir="false" afterPath="$PROJECT_DIR$/doc/statik/statik.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doc/swagger/simple_bank.swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/doc/swagger/simple_bank.swagger.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pb/service_simple_bank.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/pb/service_simple_bank.pb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pb/service_simple_bank.pb.gw.go" beforeDir="false" afterPath="$PROJECT_DIR$/pb/service_simple_bank.pb.gw.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pb/service_simple_bank_grpc.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/pb/service_simple_bank_grpc.pb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/service_simple_bank.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto/service_simple_bank.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/tools.go" beforeDir="false" afterPath="$PROJECT_DIR$/tools/tools.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/val/validator.go" beforeDir="false" afterPath="$PROJECT_DIR$/val/validator.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gapi/error.go" beforeDir="false" afterPath="$PROJECT_DIR$/gapi/error.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gapi/rpc_update_user.go" beforeDir="false" afterPath="$PROJECT_DIR$/gapi/rpc_update_user.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
   </component>
   <component name="GOROOT" url="file:///opt/homebrew/opt/go/libexec" />
   <component name="Git.Settings">
@@ -85,11 +69,12 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
     &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;ft/renewtoken&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/june24&quot;,
     &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
     &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/vuong/Documents/02_learning/00_tech/go/udemy/vt-simplebank/gapi&quot;,
@@ -108,7 +93,7 @@
       <recent name="$PROJECT_DIR$/proto" />
     </key>
   </component>
-  <component name="RunManager" selected="Makefile Target.postgres">
+  <component name="RunManager" selected="Go Build.go build main.go">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="simplebank-golang" />
       <working_directory value="$PROJECT_DIR$" />
